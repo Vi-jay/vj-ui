@@ -1,14 +1,12 @@
 const path = require("path");
 const webpack = require("webpack");
-const utils = require("./util.js");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-
+const merge = require('webpack-merge')
 function resolve(str = "") {
     return path.join(__dirname, "../", str);
 }
-
-module.exports = utils.merge(require("./webpack.base"),{
+module.exports = merge.smart(require("./webpack.base"), {
     mode: "development",
     devServer: {
         hot: true,
@@ -21,9 +19,9 @@ module.exports = utils.merge(require("./webpack.base"),{
         historyApiFallback: true
     },
     module: {
-        rules: [{
+        rules: [ {
             test: /.scss$/,
-            use: ["style-loader","css-loader","sass-loader"],
+            use: ["style-loader", "css-loader", 'postcss-loader', "sass-loader"],
             include: resolve("src")
         }]
     },

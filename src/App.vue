@@ -1,8 +1,10 @@
 <template>
-    <div id="App">asd</div>
+    <div id="App"><img src="./assets/1577685456(1).jpg" alt=""></div>
 </template>
 
 <script>
+    import asd from "./a";
+
     export default {
         name: "App",
         data() {
@@ -11,6 +13,7 @@
         methods: {},
         computed: {},
         created() {
+            asd()
         }
     }
 </script>

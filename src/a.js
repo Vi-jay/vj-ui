@@ -1,3 +1,3 @@
 export default function asd() {
-    console.log(12314)
+    console.log("asd1");
 }
