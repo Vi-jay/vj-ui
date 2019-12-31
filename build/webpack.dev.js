@@ -1,7 +1,6 @@
 const path = require("path");
+const utils = require("./utils");
 const webpack = require("webpack");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const merge = require('webpack-merge')
 function resolve(str = "") {
     return path.join(__dirname, "../", str);
@@ -15,20 +14,15 @@ module.exports = merge.smart(require("./webpack.base"), {
         disableHostCheck: true,
         useLocalIp: true,
         inline: true,
+        open: true,
+        openPage:utils.firstEntryNames(),
         contentBase: resolve("public"),
         historyApiFallback: {
-            rewrites: [
-                {from: /^\/app/, to: '/app.html'},
-                {from: /^\/double_gift/, to: '/double_gift.html'}
-            ]
+            rewrites: utils.generateMultiEntryRewrite()
         }
     },
     module: {
-        rules: [{
-            test: /.s?css$/,
-            use: ["style-loader", "css-loader", 'postcss-loader', "sass-loader"],
-            include: resolve("src")
-        }]
+        rules: []
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),

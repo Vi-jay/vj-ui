@@ -21,5 +21,8 @@
 <style scoped lang="scss">
     #AsyncCmp {
         background: orange;
+        a{
+            background: black;
+        }
     }
 </style>

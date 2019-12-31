@@ -2,17 +2,16 @@ const path = require("path");
 const AutoDllPlugin = require('autodll-webpack-plugin');
 const pkg = require("../package");
 const utils = require("./utils");
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 function resolve(str = "") {
     return path.join(__dirname, "../", str);
 }
+const isProd = process.env.NODE_ENV === 'production';
 module.exports = {
     context: resolve("src"),
-    entry: {
-        double_gift: "./double_gift/main.js",
-        app: "./t2/main.js",
-    },
+    entry: utils.generateMultiEntryNames(),
     resolve: {
         extensions: [".js", ".json", ".vue"],
         alias: {
@@ -29,7 +28,11 @@ module.exports = {
             test: /\.js$/,
             use: {loader: "babel-loader", options: {cacheDirectory: true}},
             include: resolve("src")
-        }, {
+        },  {
+            test: /\.s?css$/,
+            use: [isProd?MiniCssExtractPlugin.loader:'vue-style-loader', "css-loader", 'postcss-loader', "sass-loader"],
+            include: resolve("src")
+        },{
             test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
             loader: 'url-loader',
             options: {
@@ -51,14 +54,13 @@ module.exports = {
     },
 
     plugins: [
-        new HtmlWebpackPlugin({template: resolve("public/index.html"),  filename: 'double_gift.html',inject: true, excludeChunks:  ["app","runtime~app"]}),
-        new HtmlWebpackPlugin({template: resolve("public/index.html"), filename: 'app.html', inject: true, excludeChunks:["double_gift","runtime~double_gift"]}),
+        ...utils.generateMultiHTMLWebpackPlugin(),
         new VueLoaderPlugin(),
         new AutoDllPlugin({
             inject: true,
             filename: '[name]_[hash].js',
             entry: {
-                vendor: Object.keys(pkg.dependencies)
+                vendor: ["vue"]
             }
         })
     ],

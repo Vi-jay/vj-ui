@@ -20,6 +20,6 @@
 
 <style lang="css" scoped>
     #App {
-        background: aqua;
+        background: #313131;
     }
 </style>

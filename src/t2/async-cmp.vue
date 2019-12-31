@@ -18,9 +18,3 @@
     }
 </script>
 
-<style scoped lang="scss">
-    #AsyncCmp {
-        background: orange;
-
-    }
-</style>
