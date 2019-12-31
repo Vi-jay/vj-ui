@@ -3,15 +3,22 @@ const AutoDllPlugin = require('autodll-webpack-plugin');
 const pkg = require("../package");
 const utils = require("./utils");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 function resolve(str = "") {
     return path.join(__dirname, "../", str);
 }
 module.exports = {
     context: resolve("src"),
-    entry: {app: "./main.js"},
+    entry: {
+        double_gift: "./double_gift/main.js",
+        app: "./t2/main.js",
+    },
     resolve: {
-        extensions: [".js", ".json", ".vue"]
+        extensions: [".js", ".json", ".vue"],
+        alias: {
+            '@': resolve('src'),
+            'assets': resolve('src/assets'),
+        }
     },
     module: {
         rules: [{
@@ -44,8 +51,8 @@ module.exports = {
     },
 
     plugins: [
-
-        new HtmlWebpackPlugin({template: resolve("public/index.html"), inject: true}),
+        new HtmlWebpackPlugin({template: resolve("public/index.html"),  filename: 'double_gift.html',inject: true, excludeChunks:  ["app","runtime~app"]}),
+        new HtmlWebpackPlugin({template: resolve("public/index.html"), filename: 'app.html', inject: true, excludeChunks:["double_gift","runtime~double_gift"]}),
         new VueLoaderPlugin(),
         new AutoDllPlugin({
             inject: true,

@@ -16,11 +16,16 @@ module.exports = merge.smart(require("./webpack.base"), {
         useLocalIp: true,
         inline: true,
         contentBase: resolve("public"),
-        historyApiFallback: true
+        historyApiFallback: {
+            rewrites: [
+                {from: /^\/app/, to: '/app.html'},
+                {from: /^\/double_gift/, to: '/double_gift.html'}
+            ]
+        }
     },
     module: {
-        rules: [ {
-            test: /.scss$/,
+        rules: [{
+            test: /.s?css$/,
             use: ["style-loader", "css-loader", 'postcss-loader', "sass-loader"],
             include: resolve("src")
         }]

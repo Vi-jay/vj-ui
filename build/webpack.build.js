@@ -3,6 +3,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const merge = require('webpack-merge')
 const utils = require("./utils");
+const OptimizeCssnanoPlugin = require('@intervolga/optimize-cssnano-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 function resolve(str = "") {
     return path.join(__dirname, "../", str);
@@ -18,7 +19,7 @@ module.exports = merge.smart(require("./webpack.base"), {
     module: {
         rules: [
             {
-                test: /\.scss$/,
+                test: /\.s?css$/,
                 use: [{
                     loader: MiniCssExtractPlugin.loader,
                     options: {
@@ -32,7 +33,6 @@ module.exports = merge.smart(require("./webpack.base"), {
     optimization: {
         sideEffects: false,
         splitChunks: {
-            //只输出异步共享代码 因为此项目只配了一个入口 不会提出多入口共享代码 如果后期加入口的话可以选择提取
             chunks: 'async',   // initial、async和all
             minSize: 1,   // 形成一个新代码块最小的体积
             maxAsyncRequests: 5,   // 按需加载时候最大的并行请求数
@@ -55,8 +55,17 @@ module.exports = merge.smart(require("./webpack.base"), {
             }
         ]),
         new MiniCssExtractPlugin({
-            filename: '[name].[hash].css',
-            chunkFilename: '[id].[hash].css',
+            filename: 'css/[name].[hash].css',
+            chunkFilename: 'css/[name].[hash].css'
+        }),
+        new OptimizeCssnanoPlugin({
+            cssnanoOptions: {
+                preset: ['default', {
+                    discardComments: {
+                        removeAll: true,
+                    },
+                }],
+            },
         }),
     ],
 })

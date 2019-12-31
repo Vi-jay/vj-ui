@@ -1,24 +1,24 @@
 <template>
-    <div id="App"><img src="./assets/1577685456(1).jpg" alt=""></div>
+    <div id="App">app<async-cmp></async-cmp></div>
 </template>
 
 <script>
-    import asd from "./a";
+    const asyncCmp = ()=>import("./async-cmp.vue");
 
     export default {
         name: "App",
         data() {
             return {}
         },
+        components:{asyncCmp},
         methods: {},
         computed: {},
         created() {
-            asd()
         }
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
     #App {
         background: aqua;
     }
