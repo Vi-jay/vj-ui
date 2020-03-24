@@ -8,7 +8,7 @@ function resolve(str = "") {
 function excludeEntry(entries,...names) {
     return entries.filter((name)=>!names.includes(name))
 }
-const entries = excludeEntry(fs.readdirSync(resolve("src"), {encoding: "utf8"}));
+const entries = excludeEntry(fs.readdirSync(resolve("src"), {encoding: "utf8"}),"t2","double_gift");
 const Utils = {
     assetsPath(str) {
         return path.posix.join("static", str)

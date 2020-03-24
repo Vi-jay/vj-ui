@@ -13,7 +13,7 @@ module.exports = {
     context: resolve("src"),
     entry: utils.generateMultiEntryNames(),
     resolve: {
-        extensions: [".js", ".json", ".vue"],
+        extensions: [".js", ".json", ".vue",".ts"],
         alias: {
             '@': resolve('src'),
             'assets': resolve('src/assets'),
@@ -28,7 +28,7 @@ module.exports = {
             test: /\.js$/,
             use: {loader: "babel-loader", options: {cacheDirectory: true}},
             include: resolve("src")
-        },  {
+        }, {
             test: /\.s?css$/,
             use: [isProd?MiniCssExtractPlugin.loader:'vue-style-loader', "css-loader", 'postcss-loader', "sass-loader"],
             include: resolve("src")

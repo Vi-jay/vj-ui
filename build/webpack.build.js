@@ -42,7 +42,7 @@ module.exports = merge.smart(require("./webpack.base"), {
             }
         },
         runtimeChunk: true,
-        minimize: false, //想要开启tree shaking 必须开启压缩 非压缩状态下不会进行tree shaking
+        minimize: true, //想要开启tree shaking 必须开启压缩 非压缩状态下不会进行tree shaking
     },
     plugins: [
         new CleanWebpackPlugin(),
