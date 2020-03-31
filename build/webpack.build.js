@@ -21,27 +21,6 @@ module.exports = merge.smart(require("./webpack.base"), {
         rules: []
     },
     optimization: {
-        sideEffects: false,
-        splitChunks: {
-            automaticNameMaxLength: 100,
-            cacheGroups: {
-                // 只能在打包单页应用时合并所有css 不然会将其他入口的css也合并进来
-                // styles: {
-                //     name: 'app',
-                //     test: (module) => !/s?css/.test(module.resource),
-                //     chunks: 'all',
-                //     enforce: true // 强制忽略minChunks等设置
-                // },
-                // 同上
-                // common: {
-                //     name: 'async-common',
-                //     chunks: 'async',
-                //     minSize: 1,
-                //     minChunks: 2,
-                // }
-            }
-        },
-        runtimeChunk: true,
         minimize: true, //想要开启tree shaking 必须开启压缩 非压缩状态下不会进行tree shaking
     },
     plugins: [
